@@ -187,70 +187,72 @@ body::after {
   50% { transform: scale(1.2); opacity: 0.4; }
 }
 
-/* Botões de navegação */
+/* Botões de navegação - ARROW SIMPLES */
 .nav-btn {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.3);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
-  color: #ff6b9d;
-  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  font-size: 28px;
+  color: #ff8aa8;
+  box-shadow: 0 2px 10px rgba(255, 105, 180, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
   z-index: 100;
   cursor: pointer;
   transition: all 0.2s;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  font-weight: 300;
 }
 
 .nav-btn:active {
-  transform: translateY(-50%) scale(0.9);
-  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-50%) scale(0.92);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .nav-left {
-  left: 15px;
+  left: 8px;
 }
 
 .nav-right {
-  right: 15px;
+  right: 8px;
 }
 
 /* Esconde botões nas extremidades */
 .nav-left.hidden {
-  opacity: 0.3;
+  opacity: 0.2;
   pointer-events: none;
 }
 
 .nav-right.hidden {
-  opacity: 0.3;
+  opacity: 0.2;
   pointer-events: none;
 }
 
-/* Indicador de progresso */
+/* Indicador de progresso - mais delicado */
 .progress {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(5px);
-  padding: 8px 20px;
+  padding: 6px 18px;
   border-radius: 30px;
-  font-size: 16px;
+  font-size: 15px;
   color: #6b3e4f;
   z-index: 100;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 2px 10px rgba(255, 105, 180, 0.15);
-  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 8px rgba(255, 105, 180, 0.1);
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 /* Responsivo */
@@ -261,8 +263,8 @@ body::after {
   }
   
   .nav-btn {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     font-size: 26px;
   }
   
@@ -274,7 +276,7 @@ body::after {
 /* Garantir que o texto apareça */
 .page span {
   display: block;
-  margin: 10px 0;
+  margin: 8px 0;
 }
 </style>
 </head>
@@ -285,9 +287,9 @@ body::after {
 <div class="heart-corner heart-bl">💕</div>
 <div class="heart-corner heart-br">💓</div>
 
-<!-- Botões de navegação -->
-<div class="nav-btn nav-left" id="navLeft">👈</div>
-<div class="nav-btn nav-right" id="navRight">👉</div>
+<!-- Botões de navegação - ARROW SIMPLES -->
+<div class="nav-btn nav-left" id="navLeft">←</div>
+<div class="nav-btn nav-right" id="navRight">→</div>
 
 <!-- Indicador de progresso -->
 <div class="progress" id="progress">1/18</div>
