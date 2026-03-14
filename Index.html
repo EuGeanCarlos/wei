@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  background: linear-gradient(145deg, #f8e3ef 0%, #ffd9e8 100%);
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Flores decorativas */
+body::before {
+  content: "🌸🌼🌷🌸🌼🌷🌸🌼🌷";
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 24px;
+  opacity: 0.4;
+  color: #ff9acb;
+  letter-spacing: 8px;
+  white-space: nowrap;
+  animation: floatFlowers 20s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::after {
+  content: "✨💫✨💫✨💫✨💫✨";
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 20px;
+  opacity: 0.3;
+  color: #ffb3d1;
+  letter-spacing: 5px;
+  white-space: nowrap;
+  animation: floatStars 15s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes floatFlowers {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes floatStars {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.book {
+  display: flex;
+  height: 100vh;
+  width: fit-content;
+  transition: transform 0.4s ease-out;
+  position: relative;
+  z-index: 10;
+}
+
+.page {
+  min-width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px 25px;
+  font-size: 24px;
+  line-height: 1.8;
+  color: #6b3e4f;
+  background: rgba(255, 250, 245, 0.9);
+  position: relative;
+  word-break: break-word;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.9);
+  border-left: 2px solid rgba(255, 255, 255, 0.7);
+  border-right: 2px solid rgba(255, 182, 193, 0.4);
+  z-index: 20;
+  box-shadow: inset 0 0 20px rgba(255, 192, 203, 0.2);
+}
+
+/* Cantos decorativos */
+.corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #ffb7c5;
+  opacity: 0.3;
+  z-index: 25;
+}
+
+.corner-tl {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-tr {
+  top: 10px;
+  right: 10px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.corner-bl {
+  bottom: 10px;
+  left: 10px;
+  border-right: none;
+  border-top: none;
+}
+
+.corner-br {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Indicador de página */
+.page-number {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+  font-size: 16px;
+  color: #ff8eb5;
+  opacity: 0.8;
+  font-style: italic;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* Emojis decorativos */
+.emoji-deco {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.deco-1 { top: 15%; left: 8%; animation: bounce 3s infinite; }
+.deco-2 { top: 80%; right: 8%; animation: bounce 4s infinite; }
+.deco-3 { bottom: 15%; left: 10%; animation: bounce 3.5s infinite; }
+.deco-4 { top: 30%; right: 10%; animation: bounce 4.2s infinite; }
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Corações pulsantes */
+.heart-corner {
+  position: fixed;
+  font-size: 28px;
+  opacity: 0.2;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.heart-tl { top: 15px; left: 15px; animation: pulse 2s infinite; }
+.heart-tr { top: 15px; right: 15px; animation: pulse 2s infinite 0.3s; }
+.heart-bl { bottom: 15px; left: 15px; animation: pulse 2s infinite 0.6s; }
+.heart-br { bottom: 15px; right: 15px; animation: pulse 2s infinite 0.9s; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.2; }
+  50% { transform: scale(1.2); opacity: 0.4; }
+}
+
+/* Botões de navegação */
+.nav-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #ff6b9d;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  z-index: 100;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-btn:active {
+  transform: translateY(-50%) scale(0.9);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.nav-left {
+  left: 15px;
+}
+
+.nav-right {
+  right: 15px;
+}
+
+/* Esconde botões nas extremidades */
+.nav-left.hidden {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.nav-right.hidden {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Indicador de progresso */
+.progress {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 16px;
+  color: #6b3e4f;
+  z-index: 100;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 2px 10px rgba(255, 105, 180, 0.15);
+  font-weight: 500;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  .page {
+    font-size: 22px;
+    padding: 25px 20px;
+  }
+  
+  .nav-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 26px;
+  }
+  
+  .heart-corner {
+    font-size: 24px;
+  }
+}
+
+/* Garantir que o texto apareça */
+.page span {
+  display: block;
+  margin: 10px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="heart-corner heart-tl">💗</div>
+<div class="heart-corner heart-tr">💖</div>
+<div class="heart-corner heart-bl">💕</div>
+<div class="heart-corner heart-br">💓</div>
+
+<!-- Botões de navegação -->
+<div class="nav-btn nav-left" id="navLeft">👈</div>
+<div class="nav-btn nav-right" id="navRight">👉</div>
+
+<!-- Indicador de progresso -->
+<div class="progress" id="progress">1/18</div>
+
+<div class="book" id="book">
+
+<div class="page">
+  <div class="emoji-deco deco-1">🌸</div>
+  <div class="emoji-deco deco-2">💫</div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <span>你会是我最后的爱。</span>
+  <span>对我来说，去爱除了你以外的任何人几乎是不可能的。</span>
+  <span>💕</span>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+  <div class="page-number">1 ❤️</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-1">🌷</div>
+  <div class="emoji-deco deco-2">🤍</div>
+  <span>无论未来我们会遇到什么困难，</span>
+  <span>我都愿意把我的人生赌在我们身上。</span>
+  <span>🌈</span>
+  <div class="page-number">2 💕</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-3">☀️</div>
+  <span>我想每天醒来，为我们的爱情而努力。</span>
+  <span>因为我知道，这一切都值得。</span>
+  <span>✨</span>
+  <div class="page-number">3 💖</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-4">😊</div>
+  <span>有时候你可能觉得，我总是微笑，总是说积极的话，好像一切都很简单。</span>
+  <span>🦋</span>
+  <div class="page-number">4 💗</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-1">🌈</div>
+  <span>但其实，是看到事情美好的一面</span>
+  <span>给了我力量去面对困难。</span>
+  <span>💪🥹</span>
+  <div class="page-number">5 💓</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-2">💘</div>
+  <span>这是我人生中第一次真正感受到什么是爱。</span>
+  <span>🥹💗</span>
+  <div class="page-number">6 💕</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-3">👀</div>
+  <span>我在你的眼睛里发现了爱。</span>
+  <span>你的笑容让我的心安静下来。</span>
+  <span>🤍</span>
+  <div class="page-number">7 💖</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-4">🌍</div>
+  <span>世界上可能有数十亿比我更优秀的男人。</span>
+  <span>🌎</span>
+  <div class="page-number">8 💗</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-1">🤞</div>
+  <span>但我永远不会放弃你。</span>
+  <span>💪💕</span>
+  <div class="page-number">9 💓</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-2">🍽️</div>
+  <span>现在的我还不能给你昂贵的晚餐、</span>
+  <span>旅行或者礼物。</span>
+  <span>🎁</span>
+  <div class="page-number">10 💕</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-3">🤲</div>
+  <span>我拥有的不多，</span>
+  <span>但我拥有的一切都是你的。</span>
+  <span>🥺💗</span>
+  <div class="page-number">11 💖</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-4">💘</div>
+  <span>我爱你，我会爱你一生。</span>
+  <span>🥹✨</span>
+  <div class="page-number">12 💕</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-1">🫂</div>
+  <span>谢谢你在我艰难的日子里安抚我的心。</span>
+  <span>你是我的港湾，我的安全之地。</span>
+  <span>🏠💗</span>
+  <div class="page-number">13 💓</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-2">🏡</div>
+  <span>你是我的港湾，我的安全之地。</span>
+  <span>🤍</span>
+  <div class="page-number">14 💕</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-3">🥺</div>
+  <span>我不想失去你，Wei。</span>
+  <span>💗</span>
+  <div class="page-number">15 💖</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-4">🏰</div>
+  <span>我还在建造我的城堡，</span>
+  <span>一块砖，一块砖。</span>
+  <span>🧱</span>
+  <div class="page-number">16 💗</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-1">🥹</div>
+  <span>如果你不在我身边，</span>
+  <span>一切都不会有意义。</span>
+  <span>💕</span>
+  <div class="page-number">17 💓</div>
+</div>
+
+<div class="page">
+  <div class="emoji-deco deco-2">🤍</div>
+  <span>我会永远爱你。</span>
+  <span>🥹💗</span>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+  <div class="page-number">18 ❤️</div>
+</div>
+
+</div>
+
+<script>
+let currentPage = 0;
+const book = document.getElementById("book");
+const pages = document.querySelectorAll(".page");
+const totalPages = pages.length;
+const navLeft = document.getElementById("navLeft");
+const navRight = document.getElementById("navRight");
+const progress = document.getElementById("progress");
+
+function updatePages() {
+  // Atualiza a transformação
+  book.style.transform = `translateX(-${currentPage * 100}vw)`;
+  
+  // Atualiza o indicador de progresso
+  progress.textContent = `${currentPage + 1}/${totalPages}`;
+  
+  // Atualiza visibilidade dos botões
+  if (currentPage === 0) {
+    navLeft.classList.add('hidden');
+  } else {
+    navLeft.classList.remove('hidden');
+  }
+  
+  if (currentPage === totalPages - 1) {
+    navRight.classList.add('hidden');
+  } else {
+    navRight.classList.remove('hidden');
+  }
+}
+
+function nextPage() {
+  if (currentPage < totalPages - 1) {
+    currentPage++;
+    updatePages();
+  }
+}
+
+function prevPage() {
+  if (currentPage > 0) {
+    currentPage--;
+    updatePages();
+  }
+}
+
+// Event listeners para os botões
+navLeft.addEventListener('click', prevPage);
+navRight.addEventListener('click', nextPage);
+
+// Event listeners para teclado
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") {
+    e.preventDefault();
+    nextPage();
+  }
+  if (e.key === "ArrowLeft") {
+    e.preventDefault();
+    prevPage();
+  }
+});
+
+// Event listeners para touch (mobile)
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener("touchstart", (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const swipeThreshold = 50;
+  const diff = touchStartX - touchEndX;
+  
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      // Swipe esquerda -> próxima página
+      nextPage();
+    } else {
+      // Swipe direita -> página anterior
+      prevPage();
+    }
+  }
+}
+
+// Event listeners para mouse (desktop)
+let mouseDown = false;
+let mouseStartX = 0;
+
+document.addEventListener("mousedown", (e) => {
+  mouseDown = true;
+  mouseStartX = e.clientX;
+});
+
+document.addEventListener("mousemove", (e) => {
+  // Previne seleção de texto durante o arrasto
+  if (mouseDown) {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("mouseup", (e) => {
+  if (!mouseDown) return;
+  
+  const mouseEndX = e.clientX;
+  const diff = mouseStartX - mouseEndX;
+  const swipeThreshold = 50;
+  
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      nextPage();
+    } else {
+      prevPage();
+    }
+  }
+  
+  mouseDown = false;
+});
+
+// Previne o comportamento padrão de arrastar imagens/seleção
+document.addEventListener("dragstart", (e) => e.preventDefault());
+
+// Inicializa
+updatePages();
+
+// Garante que as páginas tenham altura correta em mobile
+function setHeight() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', setHeight);
+setHeight();
+</script>
+
+</body>
+</html>
